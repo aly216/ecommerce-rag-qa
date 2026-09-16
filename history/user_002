@@ -1,0 +1,52 @@
+[
+  {
+    "type": "human",
+    "data": {
+      "content": "纯棉的衣服怎么洗",
+      "additional_kwargs": {},
+      "response_metadata": {},
+      "type": "human",
+      "name": null,
+      "id": null
+    }
+  },
+  {
+    "type": "ai",
+    "data": {
+      "content": "纯棉衣物建议机洗或手洗，水温不超过30℃，使用中性洗涤剂。浅色与深色分开洗，首次洗涤可加少许盐固色。机洗时用洗衣袋并选择轻柔模式，避免摩擦起球。洗后阴凉通风处阴干，避免暴晒褪色。",
+      "additional_kwargs": {},
+      "response_metadata": {},
+      "type": "ai",
+      "name": null,
+      "id": null,
+      "tool_calls": [],
+      "invalid_tool_calls": [],
+      "usage_metadata": null
+    }
+  },
+  {
+    "type": "human",
+    "data": {
+      "content": "那深色纯棉会掉色吗",
+      "additional_kwargs": {},
+      "response_metadata": {},
+      "type": "human",
+      "name": null,
+      "id": null
+    }
+  },
+  {
+    "type": "ai",
+    "data": {
+      "content": "深色纯棉首次洗涤时可能会有轻微浮色掉色，属于正常现象。建议：\n\n- **首次洗涤**加少许盐固色，并与浅色衣物分开洗。\n- 使用**中性洗涤剂**，水温≤30℃。\n- **阴凉通风处阴干**，避免暴晒，可减少褪色。",
+      "additional_kwargs": {},
+      "response_metadata": {},
+      "type": "ai",
+      "name": null,
+      "id": null,
+      "tool_calls": [],
+      "invalid_tool_calls": [],
+      "usage_metadata": null
+    }
+  }
+]
