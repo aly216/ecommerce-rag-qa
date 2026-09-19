@@ -14,14 +14,44 @@
 
 ```
 RAG项目/
-├── app.qa.py                # 问答端：Streamlit 多轮对话
-├── app_file_uploader.py     # 管理端：文件上传增量更新知识库
-├── rag.py                   # LCEL RAG 链 + 多轮记忆
-├── knowledge_base.py        # 知识库服务（切分 + 入库 + MD5 去重）
-├── vector_stores.py         # Chroma 向量库封装
-├── file_history_store.py    # 自定义文件聊天历史
-├── config_data.py           # 配置（模型 / 向量化 / 切分参数）
-└── data/                    # 知识库文档（尺码 / 洗涤 / 颜色）
+├── app.qa.py                # 问答端入口：Streamlit 多轮对话，流式输出
+├── app_file_uploader.py     # 管理端入口：上传 txt 文件，增量更新知识库
+├── rag.py                   # 核心：LCEL RAG 链（检索→组装上下文→Prompt→DeepSeek）+ 多轮记忆
+├── knowledge_base.py        # 知识入库：文本切分（chunk 1000/overlap 100）+ MD5 去重 + 写入 Chroma
+├── vector_stores.py         # Chroma 向量库封装，get_retriever() 供 RAG 链检索
+├── file_history_store.py    # 自定义文件聊天历史：按 session_id 持久化 JSON，支持多轮记忆
+├── config_data.py           # 全局配置中心：模型/向量化/切分参数，从 .env 读密钥
+├── requirements.txt         # 依赖清单（langchain / streamlit / chroma 等）
+├── .env.example             # 密钥模板（DeepSeek + 阿里云百炼）
+├── md5.text                 # 已入库文档的 MD5 去重指纹（gitignore）
+├── data/                    # 知识库原始文档：尺码推荐.txt / 洗涤养护.txt / 颜色选择.txt
+├── history/                 # 对话历史持久化目录（按 session_id 存 JSON，gitignore）
+└── chroma_db/               # Chroma 向量库持久化目录（gitignore）
+```
+
+## 调用流程
+
+**问答链路（读）**
+
+```
+用户提问
+  → app.qa.py（Streamlit 入口）
+  → RAGService 链（rag.py）
+       ├─ retriever 检索 Chroma（top-1）
+       ├─ format_documents 拼装上下文
+       └─ DeepSeek 生成回答（流式）
+  → FileChatMessageHistory 把本轮消息写入 history/<session_id>
+```
+
+**入库链路（写）**
+
+```
+上传 txt
+  → app_file_uploader.py（Streamlit 管理端）
+  → KnowledgeBaseService（knowledge_base.py）
+       ├─ get_string_md5 计算指纹 → check_md5 去重
+       ├─ RecursiveCharacterTextSplitter 切分（chunk 1000 / overlap 100）
+       └─ chroma.add_texts 写入向量库 + save_md5 记录指纹
 ```
 
 ## 技术栈
