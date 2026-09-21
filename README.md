@@ -17,6 +17,7 @@ RAG项目/
 ├── app.qa.py                # 问答端入口：Streamlit 多轮对话，流式输出
 ├── app_file_uploader.py     # 管理端入口：上传 txt 文件，增量更新知识库
 ├── rag.py                   # 核心：LCEL RAG 链（检索→组装上下文→Prompt→DeepSeek）+ 多轮记忆
+├── compare.py               # 对照实验：同一问题「无 RAG vs 有 RAG」对比输出
 ├── knowledge_base.py        # 知识入库：文本切分（chunk 1000/overlap 100）+ MD5 去重 + 写入 Chroma
 ├── vector_stores.py         # Chroma 向量库封装，get_retriever() 供 RAG 链检索
 ├── file_history_store.py    # 自定义文件聊天历史：按 session_id 持久化 JSON，支持多轮记忆
@@ -26,6 +27,7 @@ RAG项目/
 ├── md5.text                 # 已入库文档的 MD5 去重指纹（gitignore）
 ├── data/                    # 知识库原始文档：尺码推荐.txt / 洗涤养护.txt / 颜色选择.txt
 ├── history/                 # 对话历史持久化目录（按 session_id 存 JSON，gitignore）
+├── img/                     # 演示截图（无 RAG vs 有 RAG 对照）
 └── chroma_db/               # Chroma 向量库持久化目录（gitignore）
 ```
 
@@ -53,6 +55,12 @@ RAG项目/
        ├─ RecursiveCharacterTextSplitter 切分（chunk 1000 / overlap 100）
        └─ chroma.add_texts 写入向量库 + save_md5 记录指纹
 ```
+
+## 无 RAG vs 有 RAG 对照
+
+同一个问题，分别「裸问 DeepSeek」和「走 RAG 链」两条路径回答，直观对比检索增强的效果——无 RAG 只有通用常识，有 RAG 答案来自知识库、有据可依。运行 `python compare.py` 可复现。
+
+![无 RAG vs 有 RAG 对照](img/compare-rag-vs-no-rag.png)
 
 ## 技术栈
 

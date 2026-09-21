@@ -26,8 +26,8 @@ max_split=1000
 
 
 
-#Retriever
-similarity_threshold=1
+#Retriever：检索时返回的 top-k 文档数（即相似度最高的前 k 条）
+retrieve_k=1
 
 
 
