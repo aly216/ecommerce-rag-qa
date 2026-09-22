@@ -1,7 +1,7 @@
 """
 无 RAG vs 有 RAG 对照实验
 
-用途：同一个问题，分别走「裸问 DeepSeek」和「RAG 检索增强」两条路径回答，
+用途：同一个问题，分别走“裸问 DeepSeek”和“RAG 检索增强”两条路径回答，
 直观对比检索增强带来的差异（无 RAG 只有通用常识，有 RAG 答案有据可依）。
 
 运行：python compare.py
@@ -26,7 +26,7 @@ def no_rag(question: str) -> str:
 
 
 def with_rag(question: str) -> str:
-    """B 路径：走 RAG 链（检索 → 拼上下文 → 生成）"""
+    """B 路径：走 RAG 链（检索 -> 拼上下文 -> 生成）"""
     return rag.chain.invoke({"input": question}, config.session_config)
 
 
